@@ -17,7 +17,7 @@ except ImportError:
     def colored(msg, *args, **kwargs):
         return msg
 
-from .crc import CRC
+from crc import CRC
 
 logger = logging.getLogger(__name__)
 
@@ -104,6 +104,9 @@ class PyRFIDGeek(object):
         # 4. AM/PM input selection (0xF1) : AM input (0xFF)
         # 0109000304 F1 FF 0000
         self.issue_evm_command(cmd='F1', prms='FF')
+
+        # activate external antenna
+        self.issue_evm_command(cmd='2B')
 
     def enable_led(self, led_no):
         cmd_codes = {2: 'FB', 3: 'F9', 4: 'F7', 5: 'F5', 6: 'F3'}
