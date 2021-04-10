@@ -105,9 +105,6 @@ class PyRFIDGeek(object):
         # 0109000304 F1 FF 0000
         self.issue_evm_command(cmd='F1', prms='FF')
 
-        # activate external antenna
-        self.issue_evm_command(cmd='2B')
-
     def enable_led(self, led_no):
         cmd_codes = {2: 'FB', 3: 'F9', 4: 'F7', 5: 'F5', 6: 'F3'}
         self.issue_iso15693_command(cmd=cmd_codes[led_no])
@@ -168,6 +165,11 @@ class PyRFIDGeek(object):
                     uid = itm[0]
                     logger.debug('Found tag: %s (%s) ', uid, itm[1])
                     yield uid
+
+    def enable_external_antenna(self):
+        # Command code 0x2B: Enable external antenna
+        # 0108000304 2B 0000
+        self.issue_evm_command(cmd='2B')
 
     def read_danish_model_tag(self, uid):
         # Command code 0x23: Read multiple blocks
